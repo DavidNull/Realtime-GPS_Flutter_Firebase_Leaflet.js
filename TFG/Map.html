@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">🌍 Where is my kid? 🌍</title>
+    <link rel="icon" type="image/png" href="imagenes/favicon.png">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/indexstyle.css">
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+    <header>
+        <div class="menu-left">
+            <h1>Where is my kid? 🧒🏻🌍</h1>
+        </div>
+        <nav class="menu-right">
+            <a href="index.html" class="menu-option">Inicio</a>
+        </nav>
+    </header>
+
+    <div id="map" style="width: 100%; height: calc(100vh - 30px) "></div>
+    <footer>
+        <p>© 2025 Where is my kid? | Todos los derechos reservados</p>
+    </footer>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>  <!-- importo leaflet.js -->
+    <script src="js/scripttitulo.js"></script>
+    <script type="module">
+        // Importar Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+      
+        // Configuración de Firebase
+        const firebaseConfig = {
+          apiKey: "AIzaSyCF6ycf52hW9Ypz9Vw-OHH0LuZ2-J4t6sM",
+          authDomain: "ubicacion-faf91.firebaseapp.com",
+          projectId: "ubicacion-faf91",
+          storageBucket: "ubicacion-faf91.firebasestorage.app",
+          messagingSenderId: "87507844915",
+          appId: "1:87507844915:web:60039ca325721053cac846",
+          measurementId: "G-29NFK6PEW3"
+        };
+      
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+      
+        // Inicializar Leaflet
+        const map = L.map('map', {
+            zoomControl: false // Desactivar los controles de zoom
+        }).setView([0, 0], 2);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+        let marker;
+    
+        // Escuchar cambios en Firebase y actualizar el mapa
+        onSnapshot(doc(db, "ubicaciones", "usuario1"), (doc) => {
+            if (doc.exists()) {
+                const data = doc.data();
+                const lat = data.latitud;
+                const lon = data.longitud;
+                if (marker) {
+                    marker.setLatLng([lat, lon]);
+                } else {
+                    marker = L.marker([lat, lon]).addTo(map);
+                }
+                map.setView([lat, lon], 15);
+            }
+        });
+    </script>
+</body>
+</html>
