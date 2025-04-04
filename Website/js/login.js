@@ -33,7 +33,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
       const dispositivoID = userData.dispositivoID;
       
       if (dispositivoID) {
-        alert(`¡Bienvenido/a ${userData.nombre}!\n\nTu ID de dispositivo es: ${dispositivoID}\n\nUsa esta ID en la aplicación móvil para sincronizar tu ubicación.`);
+        alert(`¡Bienvenido/a ${userData.nombre}!\n\nTu ID de dispositivo es: ${dispositivoID}\n\nUsa esta ID en la app "wimk-gps" para sincronizar tu ubicación con el mapa :D`);
         localStorage.setItem('dispositivoID', dispositivoID);
       }
     }
@@ -56,7 +56,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
       case 'auth/wrong-password':
         errorMessage = 'Contraseña incorrecta';
         break;
-      case 'auth/too-many-requests':
+      case 'auth/too-many-requests': // more than 5 attempts
         errorMessage = 'Demasiados intentos fallidos. Intenta más tarde';
         break;
       default:

@@ -18,7 +18,7 @@ console.log("Firebase inicializado:", app.name);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-function generarIDUnica() {
+function generarIDUnica() { //posibilities of coinciding are 1/10^6 = 0.000001%
   const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let id = '';
   for (let i = 0; i < 6; i++) {
@@ -63,7 +63,7 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
     
     console.log('Usuario registrado correctamente:', user);
     
-    alert(`¡Registro exitoso! Tu ID de dispositivo es: ${dispositivoID}\n\nGuarda esta ID, la necesitarás para la aplicación móvil.`);
+    alert(`¡Registrado correctamente! Tu ID de dispositivo es: ${dispositivoID}\n\nGuarda esta ID, la necesitarás para la app "wimk-gps" para sincronizar tu ubicación con el mapa :D`);
     
     await setDoc(doc(db, "ubicaciones", dispositivoID), {
       latitud: 0,
@@ -92,7 +92,7 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
         errorMessage = 'La contraseña es demasiado débil. Mínimo 6 caracteres';
         break;
       case 'auth/configuration-not-found':
-        errorMessage = 'Error de configuración de Firebase. Asegúrate que localhost esté en los dominios autorizados.';
+        errorMessage = 'Error de configuración de Firebase.';
         break;
       default:
         errorMessage = `Error al registrar: ${error.message}`;
