@@ -12,12 +12,11 @@
 </head>
 <body>
     <header>
-        <div class="menu-left">
-            <h1>Where is my kid? 🧒🏻🌍</h1>
+        <div class="logo">
+            <h2>Where is my kid?</h2>
         </div>
         <nav class="menu-right" id="nav-menu">
             <a href="index.html" class="menu-option">Inicio</a>
-            <a href="Map.html" class="menu-option">Mapa</a> 
         </nav>
     </header>
 
@@ -147,6 +146,8 @@
                 }
                 
                 updateNavMenu(null);
+                
+                // No redirigimos al usuario, solo mostramos el mensaje de login
             }
         }
 
@@ -172,8 +173,8 @@
          * Limpia los elementos del menú de navegación
          */
         function clearNavMenu(navMenu) {
-            // Mantener solo Inicio y Mapa
-            const navItems = navMenu.querySelectorAll('a:not([href="index.html"]):not([href="Map.html"])');
+            // Mantener solo Inicio
+            const navItems = navMenu.querySelectorAll('a:not([href="index.html"])');
             navItems.forEach(item => {
                 if (item.parentNode === navMenu) {
                     navMenu.removeChild(item);
@@ -203,12 +204,18 @@
             const dropdownContent = document.createElement('div');
             dropdownContent.className = 'dropdown-content';
             
+            const profileOption = document.createElement('a');
+            profileOption.className = 'dropdown-option';
+            profileOption.href = 'profile.html';
+            profileOption.textContent = 'Mi Perfil';
+            
             const logoutOption = document.createElement('a');
             logoutOption.className = 'dropdown-option';
             logoutOption.href = '#';
             logoutOption.textContent = 'Cerrar Sesión';
             logoutOption.addEventListener('click', handleLogout);
             
+            dropdownContent.appendChild(profileOption);
             dropdownContent.appendChild(logoutOption);
             userDropdown.appendChild(userButton);
             userDropdown.appendChild(dropdownContent);

@@ -18,7 +18,7 @@ console.log("Firebase inicializado:", app.name);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-function generarIDUnica() { //posibilities of coinciding are 1/10^6 = 0.000001%
+function generateUniqueID() { // chances of ID collision are 1/10^6 = 0.000001%
   const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let id = '';
   for (let i = 0; i < 6; i++) {
@@ -45,7 +45,7 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
   
   try {
     console.log("Intentando crear usuario...");
-    const dispositivoID = generarIDUnica();
+    const dispositivoID = generateUniqueID();
     console.log("ID generada:", dispositivoID);
     
     console.log("Configuración de auth:", auth);

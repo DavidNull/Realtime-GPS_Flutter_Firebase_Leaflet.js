@@ -101,7 +101,7 @@
         });
         
         /**
-         * Actualiza el menú de navegación según el estado de autenticación
+         * Maneja los cambios de estado de autenticación
          */
         function updateNavMenu(user) {
             const navMenu = document.getElementById('nav-menu');
@@ -153,12 +153,18 @@
             const dropdownContent = document.createElement('div');
             dropdownContent.className = 'dropdown-content';
             
+            const profileOption = document.createElement('a');
+            profileOption.className = 'dropdown-option';
+            profileOption.href = 'profile.html';
+            profileOption.textContent = 'Mi Perfil';
+            
             const logoutOption = document.createElement('a');
             logoutOption.className = 'dropdown-option';
             logoutOption.href = '#';
             logoutOption.textContent = 'Cerrar Sesión';
             logoutOption.addEventListener('click', handleLogout);
             
+            dropdownContent.appendChild(profileOption);
             dropdownContent.appendChild(logoutOption);
             userDropdown.appendChild(userButton);
             userDropdown.appendChild(dropdownContent);
