@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'dart:developer' as developer;
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(); // Temporarily disabled
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -38,12 +39,44 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   String locationMessage = "Ubicación no obtenida";
   bool isLoading = false;
-  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final TextEditingController _deviceIdController = TextEditingController();
+  bool isValidId = false;
 
   @override
   void initState() {
     super.initState();
     _checkLocationPermission();
+    _loadSavedDeviceId();
+  }
+
+  @override
+  void dispose() {
+    _deviceIdController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadSavedDeviceId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedId = prefs.getString('device_id');
+    if (savedId != null && savedId.isNotEmpty) {
+      setState(() {
+        _deviceIdController.text = savedId;
+        _validateDeviceId(savedId);
+      });
+    }
+  }
+
+  Future<void> _saveDeviceId(String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('device_id', id);
+  }
+
+  void _validateDeviceId(String value) {
+    setState(() {
+      // ONLY 6 CHARACTERS
+      isValidId = value.length == 6;
+    });
   }
 
   Future<void> _checkLocationPermission() async {
@@ -90,6 +123,19 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   Future<void> _getLocationAndSend() async {
+    // Verificar que el ID esté establecido
+    if (!isValidId) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Por favor, introduce un ID de dispositivo válido'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+    
+    final deviceId = _deviceIdController.text.trim();
+    
     setState(() {
       isLoading = true;
       locationMessage = "Obteniendo ubicación...";
@@ -133,17 +179,19 @@ class _LocationScreenState extends State<LocationScreen> {
         timeLimit: const Duration(seconds: 15),
       );
       
-      // Temporarily disable Firebase upload
-      /*
-      await _firestore.collection("ubicaciones").doc("usuario1").set({
+      // Guardar en Firestore con el ID del dispositivo
+      await _firestore.collection("ubicaciones").doc(deviceId).set({
         "latitud": position.latitude,
         "longitud": position.longitude,
-        "timestamp": FieldValue.serverTimestamp(),
+        "ultimaActualizacion": FieldValue.serverTimestamp(),
+        "usuario": "McTOY1qTxFZOVKzUtZaN3NF14V2",
       });
-      */
+      
+      // Guardar el ID del dispositivo
+      await _saveDeviceId(deviceId);
       
       setState(() {
-        locationMessage = "Ubicación obtenida: Lat: ${position.latitude}, Lon: ${position.longitude}";
+        locationMessage = "Ubicación enviada correctamente\nLat: ${position.latitude}, Lon: ${position.longitude}";
       });
     } catch (e) {
       setState(() {
@@ -205,13 +253,50 @@ class _LocationScreenState extends State<LocationScreen> {
                   textAlign: TextAlign.center,
                 ),
               ),
+              const SizedBox(height: 20),
+              
+              // Campo para ID del dispositivo
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: isValidId || _deviceIdController.text.isEmpty ? Colors.grey : Colors.red,
+                    width: 1.5,
+                  ),
+                ),
+                child: TextField(
+                  controller: _deviceIdController,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Introduce tu ID de dispositivo',
+                    prefixIcon: Icon(Icons.perm_device_information),
+                  ),
+                  style: const TextStyle(fontSize: 16),
+                  textAlign: TextAlign.center,
+                  onChanged: _validateDeviceId,
+                ),
+              ),
+              
+              const SizedBox(height: 10),
+              Text(
+                'Este ID debe coincidir con el de tu cuenta en la web',
+                style: TextStyle(
+                  fontSize: 12, 
+                  color: Colors.grey[600],
+                  fontStyle: FontStyle.italic,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              
               const SizedBox(height: 30),
               isLoading 
                 ? const CircularProgressIndicator()
                 : ElevatedButton.icon(
                     onPressed: _getLocationAndSend,
                     icon: const Icon(Icons.location_on),
-                    label: const Text("Obtener Ubicación"),
+                    label: const Text("Enviar Ubicación"),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     ),
