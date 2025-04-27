@@ -22,7 +22,7 @@
 
     <div id="map"></div>
     
-    <!-- Mensaje para usuarios no logueados -->
+    <!-- Message for users not logged in -->
     <div id="login-message" class="map-login-message" style="display: none;">
         <h3>¿Dónde está tu hijo?</h3>
         <p>Inicia sesión para ver la ubicación de tu hijo en tiempo real</p>
@@ -36,7 +36,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/scripttitulo.js"></script>
     <script type="module">
-        // Importaciones de Firebase
+        // Firebase imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
         import { 
             getFirestore, 
@@ -50,7 +50,7 @@
             signOut 
         } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
         
-        // Configuración de Firebase
+        // Firebase configuration
         const firebaseConfig = {
           apiKey: "AIzaSyCF6ycf52hW9Ypz9Vw-OHH0LuZ2-J4t6sM",
           authDomain: "ubicacion-faf91.firebaseapp.com",
@@ -61,50 +61,50 @@
           measurementId: "G-29NFK6PEW3"
         };
       
-        // Variables globales
+        // Global variables
         let marker;
         let currentDeviceId = null;
         let unsubscribe = null;
         let currentUserData = null;
         
-        // Inicialización
+        // Initialization
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
         
-        // Inicializar mapa
+        // Initialize map
         initMap();
         
-        // Escuchar cambios en la autenticación
+        // Listen changes in authentication
         onAuthStateChanged(auth, handleAuthChange);
         
         /**
-         * Inicializa el mapa Leaflet
+         * Initializes the Leaflet map
          */
         function initMap() {
             const map = L.map('map', {
                 zoomControl: false
-            }).setView([40.416775, -3.703790], 6); // Vista inicial de España
+            }).setView([40.416775, -3.703790], 6); // Initial view of Spain
             
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap contributors'
             }).addTo(map);
             
-            // Ajustar el tamaño del mapa cuando cambia el tamaño de la ventana
+            // Adjust the map size when the window size changes
             window.addEventListener('resize', () => map.invalidateSize());
             
-            // Hacer el mapa disponible globalmente para otras funciones
+            // Make the map available globally for other functions
             window.leafletMap = map;
         }
         
         /**
-         * Maneja los cambios de estado de autenticación
+         * Handles changes in authentication state
          */
         function handleAuthChange(user) {
             const loginMessage = document.getElementById('login-message');
             
             if (user) {
-                // Usuario logueado
+                // Logged in
                 if (loginMessage) {
                     loginMessage.style.display = 'none';
                 }
@@ -114,12 +114,12 @@
                         if (userDoc.exists()) {
                             currentUserData = userDoc.data();
                             
-                            // Actualizar el nombre del usuario en el menú
+                            // Update the user name in the menu
                             const userMenu = document.getElementById('user-menu');
                             if (userMenu) {
                                 userMenu.textContent = currentUserData.nombre || 'Usuario';
                             } else {
-                                // Crear el menú si no existe
+                                // Create the menu if it doesn't exist
                                 updateNavMenu(user);
                             }
                             
@@ -130,7 +130,7 @@
                     })
                     .catch(error => console.error("Error al obtener datos del usuario:", error));
             } else {
-                // Usuario no logueado
+                // Not logged in
                 if (loginMessage) {
                     loginMessage.style.display = 'block';
                 }
@@ -147,33 +147,33 @@
                 
                 updateNavMenu(null);
                 
-                // No redirigimos al usuario, solo mostramos el mensaje de login
+                // We don't redirect the user, we only show the login message
             }
         }
 
         /**
-         * Actualiza el menú de navegación según el estado de autenticación
+         * Updates the navigation menu according to the authentication state
          */
         function updateNavMenu(user) {
             const navMenu = document.getElementById('nav-menu');
             
-            // Limpiar elementos previos
+            // Clean previous elements
             clearNavMenu(navMenu);
             
             if (user) {
-                // Usuario logueado - Agregar menú de usuario
+                // Logged in - Add user menu
                 addUserMenu(navMenu, user);
             } else {
-                // Usuario no logueado - Agregar enlaces de login/registro
+                // Not logged in - Add login/register links
                 addAuthLinks(navMenu);
             }
         }
         
         /**
-         * Limpia los elementos del menú de navegación
+         * Clean the navigation menu elements
          */
         function clearNavMenu(navMenu) {
-            // Mantener solo Inicio
+            // Keep only Inicio
             const navItems = navMenu.querySelectorAll('a:not([href="index.html"])');
             navItems.forEach(item => {
                 if (item.parentNode === navMenu) {
@@ -181,7 +181,7 @@
                 }
             });
             
-            // Eliminar dropdowns existentes
+            // Delete existing dropdowns
             const existingDropdowns = navMenu.querySelectorAll('.dropdown');
             existingDropdowns.forEach(dropdown => {
                 navMenu.removeChild(dropdown);
@@ -189,7 +189,7 @@
         }
         
         /**
-         * Agrega el menú de usuario con opción de cerrar sesión
+         * Adds the user menu with logout option
          */
         function addUserMenu(navMenu, user) {
             const userDropdown = document.createElement('div');
@@ -223,7 +223,7 @@
         }
         
         /**
-         * Agrega enlaces de inicio de sesión y registro
+         * Adds login and register links
          */
         function addAuthLinks(navMenu) {
             const loginLink = document.createElement('a');
@@ -241,7 +241,7 @@
         }
         
         /**
-         * Maneja el cierre de sesión
+         * Handles logout
          */
         function handleLogout(e) {
             e.preventDefault();
@@ -254,15 +254,15 @@
         }
         
         /**
-         * Inicia el rastreo de un dispositivo por su ID
+         * Starts tracking a device by its ID
          */
         function rastrearDispositivo(deviceId) {
-            // Detener escucha anterior si existe
+            // Stop previous listening if it exists
             if (unsubscribe) {
                 unsubscribe();
             }
             
-            // Eliminar marcador anterior si existe
+            // Delete previous marker if it exists
             if (marker && window.leafletMap) {
                 window.leafletMap.removeLayer(marker);
                 marker = null;
@@ -270,7 +270,7 @@
             
             currentDeviceId = deviceId;
             
-            // Iniciar escucha en Firestore
+            // Start listening in Firestore
             unsubscribe = onSnapshot(doc(db, "ubicaciones", deviceId), (docSnapshot) => {
                 if (docSnapshot.exists()) {
                     const data = docSnapshot.data();
@@ -278,18 +278,18 @@
                         const position = [data.latitud, data.longitud];
                         
                         if (!marker) {
-                            // Crear marcador si no existe
+                            // Create marker if it doesn't exist
                             marker = L.marker(position).addTo(window.leafletMap);
-                            // Centrar mapa en el marcador
+                            // Center map on the marker
                             window.leafletMap.setView(position, 15);
                         } else {
-                            // Actualizar posición del marcador
+                            // Update marker position
                             marker.setLatLng(position);
                         }
                     }
                 }
             }, (error) => {
-                console.error("Error al escuchar cambios en la ubicación:", error);
+                    console.error("Error al escuchar cambios en la ubicación:", error);
             });
         }
     </script>

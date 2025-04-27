@@ -1,4 +1,4 @@
-// Importaciones de Firebase
+// Firebase imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
 import { 
     getFirestore, 
@@ -14,7 +14,7 @@ import {
     updatePassword
 } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
 
-// Configuración de Firebase
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCF6ycf52hW9Ypz9Vw-OHH0LuZ2-J4t6sM",
   authDomain: "ubicacion-faf91.firebaseapp.com",
@@ -25,38 +25,38 @@ const firebaseConfig = {
   measurementId: "G-29NFK6PEW3"
 };
 
-console.log("Inicializando profile.js");
+console.log("Initializing profile.js");
 
-// Variables globales
+// Global variables
 let currentUserData = null;
 
-// Inicialización
+// Initialization
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 console.log("Firebase inicializado en profile.js:", auth);
 
-// Escuchar cambios en la autenticación
+// Listen changes in authentication
 onAuthStateChanged(auth, (user) => {
-    console.log("Estado de autenticación cambiado:", user ? `Usuario ${user.uid} autenticado` : "Usuario no autenticado");
+    console.log("Authentication state changed:", user ? `User ${user.uid} authenticated` : "User not authenticated");
     if (user) {
-        // Usuario logueado
+        // Logged in user
         getDoc(doc(db, "usuarios", user.uid))
             .then(userDoc => {
                 if (userDoc.exists()) {
                     currentUserData = userDoc.data();
                     console.log("Datos de usuario obtenidos:", currentUserData);
                     
-                    // Actualizar el nombre del usuario en el menú
+                    // Update the user name in the menu
                     const userMenu = document.getElementById('user-menu');
                     if (userMenu) {
                         userMenu.textContent = currentUserData.nombre || 'Usuario';
                     } else {
-                        // Crear el menú si no existe
+                        // Create the menu if it doesn't exist
                         updateNavMenu(user);
                     }
                     
-                    // Actualizar la información del perfil
+                    // Update the profile information
                     updateProfileInfo(user, currentUserData);
                 } else {
                     console.error("No se encontraron datos del usuario");
@@ -64,7 +64,7 @@ onAuthStateChanged(auth, (user) => {
             })
             .catch(error => console.error("Error al obtener datos del usuario:", error));
     } else {
-        // Usuario no logueado - redirigir a login después de un breve retraso
+        // Not logged in - redirect to login after a brief delay
         console.log("Usuario no autenticado, redirigiendo al login...");
         setTimeout(() => {
             window.location.href = 'login.html';
@@ -73,7 +73,7 @@ onAuthStateChanged(auth, (user) => {
 });
 
 /**
- * Actualiza el menú de navegación según el estado de autenticación
+ * Updates the navigation menu according to the authentication state
  */
 function updateNavMenu(user) {
     const navMenu = document.getElementById('nav-menu');
@@ -82,23 +82,23 @@ function updateNavMenu(user) {
         return;
     }
     
-    // Limpiar elementos previos
+    // Clean previous elements
     clearNavMenu(navMenu);
     
     if (user) {
-        // Usuario logueado - Agregar menú de usuario
+        // Logged in user - Add user menu
         addUserMenu(navMenu, user);
     } else {
-        // Usuario no logueado - Agregar enlaces de login/registro
+        // Not logged in user - Add login/register links
         addAuthLinks(navMenu);
     }
 }
 
 /**
- * Limpia los elementos del menú de navegación
+ * Clean the navigation menu elements
  */
 function clearNavMenu(navMenu) {
-    // Mantener solo Inicio y Mapa
+    // Keep only Inicio and Map
     const navItems = navMenu.querySelectorAll('a:not([href="index.html"]):not([href="Map.html"])');
     navItems.forEach(item => {
         if (item.parentNode === navMenu) {
@@ -106,7 +106,7 @@ function clearNavMenu(navMenu) {
         }
     });
     
-    // Eliminar dropdowns existentes
+    // Delete existing dropdowns
     const existingDropdowns = navMenu.querySelectorAll('.dropdown');
     existingDropdowns.forEach(dropdown => {
         navMenu.removeChild(dropdown);
@@ -114,7 +114,7 @@ function clearNavMenu(navMenu) {
 }
 
 /**
- * Agrega el menú de usuario con opción de cerrar sesión
+ * Adds the user menu with logout option
  */
 function addUserMenu(navMenu, user) {
     const userDropdown = document.createElement('div');
@@ -148,7 +148,7 @@ function addUserMenu(navMenu, user) {
 }
 
 /**
- * Agrega enlaces de inicio de sesión y registro
+ * Adds login and register links
  */
 function addAuthLinks(navMenu) {
     const loginLink = document.createElement('a');
@@ -166,7 +166,7 @@ function addAuthLinks(navMenu) {
 }
 
 /**
- * Maneja el cierre de sesión
+ * Handles logout
  */
 function handleLogout(e) {
     e.preventDefault();
@@ -179,7 +179,7 @@ function handleLogout(e) {
 }
 
 /**
- * Actualiza la información del perfil en la página
+ * Updates the profile information on the page
  */
 function updateProfileInfo(user, userData) {
     const profileName = document.getElementById('profile-name');
@@ -196,7 +196,7 @@ function updateProfileInfo(user, userData) {
     }
 }
 
-// Manejar el cambio de contraseña
+// Handle password change
 const passwordForm = document.getElementById('password-form');
 if (passwordForm) {
     passwordForm.addEventListener('submit', async (e) => {
@@ -208,18 +208,18 @@ if (passwordForm) {
         const confirmPassword = document.getElementById('confirm-password').value;
         const messageElement = document.getElementById('password-message');
         
-        // Limpiar mensajes anteriores
+        // Clean previous messages
         messageElement.textContent = '';
         messageElement.className = 'status-message';
         
-        // Validar que las contraseñas coincidan
+        // Validate that the passwords match
         if (newPassword !== confirmPassword) {
             messageElement.textContent = 'Las contraseñas nuevas no coinciden.';
             messageElement.className = 'status-message error';
             return;
         }
         
-        // Validar que la contraseña tenga al menos 6 caracteres
+        // Validate that the password has at least 6 characters
         if (newPassword.length < 6) {
             messageElement.textContent = 'La contraseña debe tener al menos 6 caracteres.';
             messageElement.className = 'status-message error';
@@ -227,7 +227,7 @@ if (passwordForm) {
         }
         
         try {
-            // Mostrar mensaje de carga
+            // Show loading message
             messageElement.textContent = 'Actualizando contraseña...';
             messageElement.className = 'status-message';
             messageElement.style.display = 'block';
@@ -239,30 +239,30 @@ if (passwordForm) {
                 throw new Error('No hay usuario autenticado');
             }
             
-            // Reautenticar al usuario
+            // Reauthenticate the user
             const credential = EmailAuthProvider.credential(user.email, currentPassword);
             await reauthenticateWithCredential(user, credential);
             
-            // Cambiar la contraseña
+            // Change the password
             await updatePassword(user, newPassword);
             
-            // Mostrar mensaje de éxito
+            // Show success message
             messageElement.textContent = 'Contraseña actualizada correctamente.';
             messageElement.className = 'status-message success';
             
-            // Limpiar el formulario
+            // Clean the form
             passwordForm.reset();
         } catch (error) {
             console.error('Error al cambiar la contraseña:', error);
             
-            // Mostrar mensaje de error apropiado
+            // Show appropriate error message
             if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
                 messageElement.textContent = 'La contraseña actual es incorrecta.';
             } else if (error.code === 'auth/weak-password') {
                 messageElement.textContent = 'La nueva contraseña es demasiado débil. Mínimo 6 caracteres.';
             } else if (error.code === 'auth/requires-recent-login') {
                 messageElement.textContent = 'Esta operación es sensible y requiere autenticación reciente. Inicia sesión nuevamente.';
-                // Cerrar sesión y redirigir al login después de 3 segundos
+                // Logout and redirect to login after 3 seconds
                 setTimeout(() => {
                     signOut(auth).then(() => {
                         window.location.href = 'login.html';

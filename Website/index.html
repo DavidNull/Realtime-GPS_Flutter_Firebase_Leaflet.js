@@ -55,7 +55,7 @@
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
         
-        // Configuración de Firebase
+        // CONFIG of Firebase
         const firebaseConfig = {
           apiKey: "AIzaSyCF6ycf52hW9Ypz9Vw-OHH0LuZ2-J4t6sM",
           authDomain: "ubicacion-faf91.firebaseapp.com",
@@ -66,28 +66,28 @@
           measurementId: "G-29NFK6PEW3"
         };
         
-        // Inicializar Firebase
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
         
-        // Variables globales
+        // Global variables
         let currentUserData = null;
         
-        // Escuchar cambios en el estado de autenticación
+        // Listen changes in the authentication state
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Usuario logueado - obtener datos del usuario
+                // Logged in - get user data
                 getDoc(doc(db, "usuarios", user.uid)).then((userDoc) => {
                     if (userDoc.exists()) {
                         currentUserData = userDoc.data();
                         
-                        // Actualizar el nombre del usuario en el menú
+                        // Update the user name in the menu
                         const userMenu = document.getElementById('user-menu');
                         if (userMenu) {
                             userMenu.textContent = currentUserData.nombre || 'Usuario';
                         } else {
-                            // Crear el menú si no existe
+                            // Create the menu if it doesn't exist
                             updateNavMenu(user);
                         }
                     }
@@ -95,34 +95,34 @@
                     console.error("Error al obtener datos del usuario:", error);
                 });
             } else {
-                // Usuario no logueado
+                // Not logged in
                 updateNavMenu(null);
             }
         });
         
         /**
-         * Maneja los cambios de estado de autenticación
+         * Handles changes in authentication state
          */
         function updateNavMenu(user) {
             const navMenu = document.getElementById('nav-menu');
             
-            // Limpiar elementos previos
+            // Clean previous elements
             clearNavMenu(navMenu);
             
             if (user) {
-                // Usuario logueado - Agregar menú de usuario
+                // Logged in - Add user menu
                 addUserMenu(navMenu, user);
             } else {
-                // Usuario no logueado - Agregar enlaces de login/registro
+                // Not logged in - Add login/register links
                 addAuthLinks(navMenu);
             }
         }
         
         /**
-         * Limpia los elementos del menú de navegación
+         * Clean the navigation menu elements
          */
         function clearNavMenu(navMenu) {
-            // Mantener solo Mapa (en el caso del index)
+            // Keep only Map (in the case of the index)
             const navItems = navMenu.querySelectorAll('a:not([href="Map.html"])');
             navItems.forEach(item => {
                 if (item.parentNode === navMenu) {
@@ -130,7 +130,7 @@
                 }
             });
             
-            // Eliminar dropdowns existentes
+            // Delete existing dropdowns
             const existingDropdowns = navMenu.querySelectorAll('.dropdown');
             existingDropdowns.forEach(dropdown => {
                 navMenu.removeChild(dropdown);
@@ -138,7 +138,7 @@
         }
         
         /**
-         * Agrega el menú de usuario con opción de cerrar sesión
+         * Adds the user menu with logout option
          */
         function addUserMenu(navMenu, user) {
             const userDropdown = document.createElement('div');
@@ -172,7 +172,7 @@
         }
         
         /**
-         * Agrega enlaces de inicio de sesión y registro
+         * Adds login and register links
          */
         function addAuthLinks(navMenu) {
             const loginLink = document.createElement('a');
@@ -190,7 +190,7 @@
         }
         
         /**
-         * Maneja el cierre de sesión
+         * Handles logout
          */
         function handleLogout(e) {
             e.preventDefault();
