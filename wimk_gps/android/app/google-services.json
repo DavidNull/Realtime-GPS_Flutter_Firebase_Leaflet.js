@@ -1,0 +1,30 @@
+{
+    "project_info": {
+      "project_number": "87507844915",
+      "firebase_url": "https://ubicacion-faf91-default-rtdb.europe-west1.firebasedatabase.app",
+      "project_id": "ubicacion-faf91",
+      "storage_bucket": "ubicacion-faf91.firebasestorage.app"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:87507844915:android:e3aee87e958dd882cac846",
+          "android_client_info": {
+            "package_name": "com.example.prueba"
+          }
+        },
+        "oauth_client": [],
+        "api_key": [
+          {
+            "current_key": "AIzaSyAVg9-uCer0WFMhfmOB5KOxdDuW-5O43RY"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": []
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }
