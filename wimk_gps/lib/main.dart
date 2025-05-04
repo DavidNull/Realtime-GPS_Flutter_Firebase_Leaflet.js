@@ -5,38 +5,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'dart:developer' as developer;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
 
 // Flag to track Firebase initialization status
 bool _isFirebaseInitialized = false;
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  try {
-    // 🔥 CONEXIÓN FIREBASE: Inicialización de Firebase 🔥
-    await Firebase.initializeApp();
-    _isFirebaseInitialized = true;
-    developer.log('Firebase initialized successfully', name: 'Firebase');
-    
-    // Check if we can access Firestore
+  // Capturar errores no controlados
+  runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
     try {
-      // 🔥 CONEXIÓN FIREBASE: Obtención de instancia Firestore 🔥
-      FirebaseFirestore firestore = FirebaseFirestore.instance;
-      developer.log('Firestore instance obtained successfully', name: 'Firebase');
-      
-      // Try a simple operation to verify connectivity
-      await firestore.collection('test').doc('test').set({'test': true});
-      developer.log('Firestore write test successful', name: 'Firebase');
-      
-      // Delete the test document
-      await firestore.collection('test').doc('test').delete();
+      await Firebase.initializeApp();
+      _isFirebaseInitialized = true;
     } catch (e) {
-      developer.log('Error testing Firestore: $e', name: 'Firebase');
+      _isFirebaseInitialized = false;
     }
-  } catch (e) {
-    _isFirebaseInitialized = false;
-    developer.log('Error initializing Firebase: $e', name: 'Firebase');
-  }
-  runApp(const MyApp());
+    runApp(const MyApp());
+  }, (error, stack) {
+    developer.log('Unhandled error: $error', name: 'FATAL');
+    developer.log('Stack trace: $stack', name: 'FATAL');
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -81,14 +69,8 @@ class _LocationScreenState extends State<LocationScreen> {
   void _initFirestore() {
     if (_isFirebaseInitialized) {
       try {
-        // 🔥 CONEXIÓN FIREBASE: Inicialización de Firestore en el estado 🔥
         _firestore = FirebaseFirestore.instance;
-        developer.log('Firestore instance initialized in state', name: 'Firestore');
-      } catch (e) {
-        developer.log('Error getting Firestore instance: $e', name: 'Firestore');
-      }
-    } else {
-      developer.log('Cannot initialize Firestore because Firebase is not initialized', name: 'Firestore');
+      } catch (e) {}
     }
   }
 
@@ -165,7 +147,6 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   Future<void> _getLocationAndSend() async {
-    // Check if ID is valid
     if (!isValidId) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -176,21 +157,16 @@ class _LocationScreenState extends State<LocationScreen> {
       return;
     }
     
-    // First check if Firestore is available
     if (_firestore == null && _isFirebaseInitialized) {
       try {
-        // 🔥 CONEXIÓN FIREBASE: Inicialización de Firestore durante el envío 🔥
         _firestore = FirebaseFirestore.instance;
-        developer.log('Firestore instance initialized during location send', name: 'Firestore');
-      } catch (e) {
-        developer.log('Error getting Firestore instance during send: $e', name: 'Firestore');
-      }
+      } catch (e) {}
     }
     
     if (_firestore == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('🚫 Firebase no está disponible. No se puede guardar la ubicación.'),
+          content: Text('🚫 Firebase no está disponible'),
           backgroundColor: Colors.red,
         ),
       );
@@ -205,7 +181,6 @@ class _LocationScreenState extends State<LocationScreen> {
     });
 
     try {
-      // Check if location services are enabled
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         setState(() {
@@ -215,7 +190,6 @@ class _LocationScreenState extends State<LocationScreen> {
         return;
       }
 
-      // Check location permission
       LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
@@ -235,50 +209,27 @@ class _LocationScreenState extends State<LocationScreen> {
         return;
       }
 
-      // Get current position
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
         timeLimit: const Duration(seconds: 15),
       );
       
-      // Try to save to Firestore
       try {
-        developer.log('Attempting to save to collection: ubicaciones, document: $deviceId', name: 'Firestore');
-        developer.log('Data to save: lat=${position.latitude}, lon=${position.longitude}', name: 'Firestore');
-        
-        // Data to save
         Map<String, dynamic> locationData = {
           "latitud": position.latitude,
           "longitud": position.longitude,
           "ultimaActualizacion": FieldValue.serverTimestamp(),
         };
         
-        // Log the data we're going to send
-        developer.log('Formatted data: $locationData', name: 'Firestore');
-        
-        // Try to save the data
-        // 🔥 CONEXIÓN FIREBASE: Envío de datos a Firestore 🔥
         await _firestore!.collection("ubicaciones").doc(deviceId).set(locationData);
-        
-        developer.log('Data successfully saved to Firestore', name: 'Firestore');
-        
-        // Save the device ID in preferences
         await _saveDeviceId(deviceId);
         
         setState(() {
           locationMessage = "✅ Ubicación enviada correctamente\nLat: ${position.latitude}, Lon: ${position.longitude}";
         });
       } catch (e) {
-        developer.log('Error saving to Firestore: $e', name: 'Firestore');
-        
         setState(() {
-          if (e.toString().contains('permission-denied') || e.toString().contains('PERMISSION_DENIED')) {
-            locationMessage = "❌ Error: No tienes permisos para guardar en Firestore";
-          } else if (e.toString().contains('network')) {
-            locationMessage = "❌ Error de red: Verifica tu conexión a Internet :(";
-          } else {
-            locationMessage = "❌ Error al guardar: $e";
-          }
+          locationMessage = "❌ Error al guardar: $e";
         });
       }
     } catch (e) {
