@@ -1,5 +1,5 @@
 # Where is my kid? - Real-Time GPS Tracking System 🌍
-<img src="Docs/img/Logo_App.png" width="200" height="200">
+<img src="doc/img/Logo_App.png" width="200" height="200">
 
 ## Final Degree Project - Network Systems Administration (ASIR)
 
@@ -8,28 +8,30 @@
 
 ## 📋 Description
 
-"Where is my kid? 🧒🏻🌍" is a real-time GPS tracking system 📍 designed as a Final Degree Project for the Network Systems Administration (ASIR) course. 
-This project provides a solution that allows parents or legal tutors to monitor their children's location in real-time through a modern web interface 🌐 and a mobile application 📱.
+**🇬🇧 English**  
+**"Where is my kid? 🧒🏻🌍"** is a real-time GPS tracking system 📍 developed as a Final Degree Project for the Network Systems Administration (ASIR) course.  
+This project offers a solution that allows parents or legal guardians to monitor their children's location in real-time through a modern web interface 🌐 and a mobile application 📱.
+
+**🇪🇸 Español**  
+**"Where is my kid? 🧒🏻🌍"** es un sistema de rastreo GPS en tiempo real 📍 desarrollado como Proyecto Final de Grado del ciclo (TFG) de Administración de Sistemas Informáticos en Red (ASIR).  
+Este proyecto proporciona una solución que permite a padres o tutores legales monitorear la ubicación de sus hijos en tiempo real mediante una interfaz web moderna 🌐 y una aplicación móvil 📱.
 
 ## ✨ Features
 
-- 🔄 **Real-time tracking**: Continuous device location updates through Firebase Realtime Database
+- 🔄 **Real-time tracking**
 - 🔒 **Authentication system**: Secure access via email and password using Firebase Authentication
 - 📱 **Cross-platform mobile app**: Developed with Flutter for Android with background location services
 - 🌐 **Modern web interface**: Built with Vue.js 3 (Composition API) and Tailwind CSS
 - 🧩 **Model-View-Presenter**: Clean architecture pattern implemented for better code organization
 - 🗺️ **Interactive map visualization**: Using Leaflet.js with custom markers for intuitive location tracking
 - ☁️ **Cloud storage**: Firebase Firestore for secure, scalable data management
-- 🔑 **Unique ID system**: Device-account association with secure device identification
-- 🔄 **Dynamic page title**: Changing titles to enhance user experience
+- 🔑 **Unique ID system**: 
 
 ## 🧩 System Components
 
 The project consists of two main components:
 
 ### 1. Web Application 💻
-
-![Web Screenshot](Docs/img/web_screenshot.png)
 
 The web interface allows users to:
 - Register and log in to the system with email verification
@@ -38,19 +40,18 @@ The web interface allows users to:
 - Manage their profile information
 
 **Technologies used**:
-- **Vue.js 3**: Modern reactive framework with Composition API
-- **Tailwind CSS**: Utility-first CSS framework for responsive design
-- **Vite**: Next-generation frontend tooling for fast development
-- **Leaflet.js**: Interactive maps with custom markers
-- **Firebase Authentication**: Secure user management
-- **Firebase Firestore**: Real-time database for location data
-- **Pinia**: State management for Vue 3
-- **Vue Router**: Client-side routing
-- **PostCSS**: For CSS processing with plugins
+- **Vue.js 3**
+- **Tailwind CSS**
+- **Vite**
+- **Leaflet.js**
+- **Firebase Authentication**
+- **Firebase Firestore**
+- **Pinia**
+- **Vue Router**
+- **PostCSS**
 
 ### 2. Mobile Application (WIMK-GPS) 📲
 
-![App Screenshot](Docs/img/app_screenshot.png)
 
 The mobile application (developed with Flutter) offers:
 - Real-time location sending with background service capabilities
@@ -64,31 +65,13 @@ The mobile application (developed with Flutter) offers:
 - **Firebase SDK**: For secure database communication
 - **Shared Preferences**: For local storage of settings and device ID
 
-## 🏗️ System Architecture
-
-![Architecture Diagram](Docs/img/architecture.png)
-
-The system uses a clean architecture approach with:
-1. **Firebase** as the central cloud platform for:
-   - Authentication (Firebase Auth)
-   - Real-time data storage (Firestore)
-   - Secure data transmission (HTTPS)
-2. **Web Client** built with Vue.js following MVP pattern:
-   - Models: Data structure definitions
-   - Views: UI components
-   - Presenters: Business logic handlers
-3. **Mobile Client** built with Flutter:
-   - Background location services
-   - Secure communication with Firebase
-
-All data is encrypted in transit using HTTPS and at rest with AES-256 encryption on Firebase servers.
 
 ## 🚀 Setup and Installation
 
 ### Prerequisites 📝
 - Node.js 16+
 - npm or yarn
-- Firebase account
+- Firebase account (if you want to make your own)
 - Flutter SDK (for mobile app)
 - Git
 
@@ -107,8 +90,6 @@ npm install
 # Run development server
 npm run dev
 
-# Build for production
-npm run build
 ```
 
 ### Mobile Application Installation 📱
@@ -127,16 +108,7 @@ flutter run
 flutter build apk
 ```
 
-## 🔐 Security Considerations
 
-The system implements several security measures:
-
-- Firebase-based authentication with **verified email**
-- Encrypted data transmission via **HTTPS**
-- Server-side data encryption at rest with **AES-256**
-- **Unique ID system** to link devices and accounts
-- Secure credential storage with Firebase Authentication
-- **Clean code practices** for security maintainability
 
 ## 📂 Project Structure (Web)
 
