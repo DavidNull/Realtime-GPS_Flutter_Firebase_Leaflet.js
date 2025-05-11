@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen">
-    <!-- Hero section -->
+    <!-- MAP VIDEO section -->
     <div class="relative">
       <div class="absolute inset-0 overflow-hidden">
         <video autoplay loop muted class="min-w-full min-h-full object-cover">
@@ -25,24 +25,24 @@
       </div>
     </div>
     
-    <!-- Info section -->
-    <div class="bg-white py-16">
+    <!-- "Sabias que?" section -->
+    <div class="bg-slate-800 text-white py-16">
       <div class="container mx-auto px-4">
         <h2 class="text-3xl font-bold text-center mb-12">¿Sabías que?</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="bg-blue-50 rounded-lg p-6 shadow-md transform transition-transform hover:scale-105">
-            <h3 class="text-xl font-semibold mb-3">Atropellos infantiles</h3>
+          <div class="bg-slate-700 rounded-lg p-6 shadow-md transform transition-transform hover:scale-105">
+            <h3 class="text-xl font-semibold mb-3 text-sky-400">Atropellos infantiles</h3>
             <p>En España <strong>el 16% de los atropellos al año son a menores de 14 años</strong>, eso son <strong>1540 niños al año.</strong></p>
           </div>
           
-          <div class="bg-green-50 rounded-lg p-6 shadow-md transform transition-transform hover:scale-105">
-            <h3 class="text-xl font-semibold mb-3">Accidentes en la calle</h3>
+          <div class="bg-slate-700 rounded-lg p-6 shadow-md transform transition-transform hover:scale-105">
+            <h3 class="text-xl font-semibold mb-3 text-green-400">Accidentes en la calle</h3>
             <p>Un estudio realizado en Andalucía indica que <strong>el 34,6% de los accidentes infantiles ocurren en la calle por ir desatendidos o solos.</strong></p>
           </div>
           
-          <div class="bg-red-50 rounded-lg p-6 shadow-md transform transition-transform hover:scale-105">
-            <h3 class="text-xl font-semibold mb-3">Secuestros de menores</h3>
+          <div class="bg-slate-700 rounded-lg p-6 shadow-md transform transition-transform hover:scale-105">
+            <h3 class="text-xl font-semibold mb-3 text-red-400">Secuestros de menores</h3>
             <p>Los <strong>secuestros de menores</strong> con fines criminales en España <strong>aumentaron un 125% de 2023 a 2024</strong>, pasando de 8 a 18.</p>
           </div>
         </div>
@@ -56,34 +56,35 @@
       </div>
     </div>
     
-    <!-- Features section -->
-    <div class="bg-gray-100 py-16">
+    <!-- "Que ofrecemos?" section -->
+    <div class="bg-gray-200 py-16">
       <div class="container mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center mb-12">Características</h2>
+        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">¿Qué ofrecemos?</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div class="bg-white rounded-lg p-6 shadow-md">
             <div class="text-primary text-4xl mb-4">
               <i class="fas fa-map-marker-alt"></i>
             </div>
-            <h3 class="text-xl font-semibold mb-3">Seguimiento en Tiempo Real</h3>
-            <p>Monitorea la ubicación exacta de tus hijos en tiempo real con actualizaciones constantes.</p>
+            <h3 class="text-xl font-semibold mb-3 text-gray-700">Seguimiento en Tiempo Real</h3>
+            <p class="text-gray-600">Monitorea la ubicación exacta de tus hijos <strong>en tiempo real</strong>.</p>
           </div>
           
           <div class="bg-white rounded-lg p-6 shadow-md">
             <div class="text-primary text-4xl mb-4">
               <i class="fas fa-mobile-alt"></i>
             </div>
-            <h3 class="text-xl font-semibold mb-3">App Móvil Sencilla</h3>
-            <p>Aplicación móvil fácil de usar para tus hijos, que envía su ubicación sin complicaciones.</p>
+            <h3 class="text-xl font-semibold mb-3 text-gray-700">App Móvil Sencilla</h3>
+            <p class="text-gray-600">Aplicación móvil fácil de usar para tus hijos con solo 2 opciones: <strong>Añadir ID</strong> y <strong>enviar ubicación</strong>.</p>
           </div>
           
           <div class="bg-white rounded-lg p-6 shadow-md">
             <div class="text-primary text-4xl mb-4">
               <i class="fas fa-lock"></i>
             </div>
-            <h3 class="text-xl font-semibold mb-3">Privacidad y Seguridad</h3>
-            <p>Datos encriptados y sistema seguro que sólo comparte información con quien tú autorices.</p>
+            <h3 class="text-xl font-semibold mb-3 text-gray-700">Privacidad y Seguridad</h3>
+            <p class="text-gray-600">Datos encriptados y sistema donde solo puede acceder a la ubicación el usuario que tiene el ID.</p>
+            <!--Con encriptación me refiero a AES-256 y HTTPS -->
           </div>
         </div>
       </div>

@@ -66,14 +66,11 @@ export const useUserStore = defineStore('user', () => {
       loading.value = true
       error.value = null
       
-      // Generate unique device ID
       const deviceId = generateUniqueId()
       
-      // Create user
       const userCredential = await createUserWithEmailAndPassword(auth, email, password)
       user.value = userCredential.user
       
-      // Store user data
       await setDoc(doc(db, "usuarios", user.value.uid), {
         nombre: name,
         email: email,
@@ -81,7 +78,6 @@ export const useUserStore = defineStore('user', () => {
         fechaRegistro: new Date()
       })
       
-      // Initialize location document
       await setDoc(doc(db, "ubicaciones", deviceId), {
         latitud: 0,
         longitud: 0,
@@ -89,7 +85,6 @@ export const useUserStore = defineStore('user', () => {
         usuario: user.value.uid
       })
       
-      // Fetch user data
       await fetchUserData(user.value.uid)
       
       return { success: true, deviceId }
@@ -130,7 +125,6 @@ export const useUserStore = defineStore('user', () => {
     }
   }
   
-  // Helper functions
   const generateUniqueId = () => {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
     let id = ''
@@ -162,17 +156,14 @@ export const useUserStore = defineStore('user', () => {
   }
   
   return {
-    // State
     user,
     userData,
     loading,
     error,
     
-    // Getters
     isAuthenticated,
     deviceId,
     
-    // Actions
     login,
     register,
     logout,

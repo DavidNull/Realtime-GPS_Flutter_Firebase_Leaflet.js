@@ -2,13 +2,16 @@
   <div class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
       <div class="text-center">
-        <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
+        <router-link to="/">
+          <img class="mx-auto h-16 w-auto" src="/images/favicon.png" alt="Logo">
+        </router-link>
+        <h2 class="mt-6 text-3xl font-extrabold text-primary">
           Iniciar Sesión
         </h2>
         <p class="mt-2 text-sm text-gray-600">
           O
-          <router-link to="/register" class="font-medium text-primary hover:text-primary/80">
-            regístrate si aún no tienes cuenta
+          <router-link to="/register" class="font-medium text-blue-800 hover:text-blue-500">
+            <strong>regístrate</strong> si aún no tienes cuenta
           </router-link>
         </p>
       </div>
@@ -59,12 +62,6 @@
               Recordarme
             </label>
           </div>
-
-          <div class="text-sm">
-            <a href="#" class="font-medium text-primary hover:text-primary/80">
-              ¿Olvidaste tu contraseña?
-            </a>
-          </div>
         </div>
 
         <div>
@@ -96,20 +93,16 @@ import { useUserStore } from '../stores/userStore'
 export default {
   name: 'LoginView',
   setup() {
-    // State
     const email = ref('')
     const password = ref('')
     const rememberMe = ref(false)
     const isLoading = ref(false)
     const errorMessage = ref('')
     
-    // Router
     const router = useRouter()
     
-    // User store
     const userStore = useUserStore()
-    
-    // Methods
+
     const handleLogin = async () => {
       try {
         isLoading.value = true
@@ -119,11 +112,9 @@ export default {
         
         if (result.success) {
           if (rememberMe.value) {
-            // Implement remember-me logic if needed
             localStorage.setItem('rememberUser', 'true')
           }
           
-          // Redirect to map after successful login
           router.push('/map')
         } else {
           errorMessage.value = result.error || 'Error al iniciar sesión'

@@ -2,12 +2,6 @@ import { db } from '../../firebase'
 import { doc, onSnapshot, getDoc } from 'firebase/firestore'
 
 class LocationService {
-  /**
-   * Subscribe to location updates for a device
-   * @param {string} deviceId - The device ID to track
-   * @param {function} callback - Callback function that receives location data
-   * @returns {function} - Function to unsubscribe
-   */
   subscribeToLocation(deviceId, callback) {
     if (!deviceId) {
       callback({ error: 'No device ID provided' })
@@ -36,12 +30,7 @@ class LocationService {
       }
     )
   }
-  
-  /**
-   * Get the latest location for a device
-   * @param {string} deviceId - The device ID to get location for
-   * @returns {Promise<object>} - Location data
-   */
+
   async getLatestLocation(deviceId) {
     try {
       if (!deviceId) {

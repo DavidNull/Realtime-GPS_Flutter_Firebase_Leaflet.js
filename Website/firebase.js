@@ -1,5 +1,4 @@
-// Firebase configuration file
-// All Firebase imports and setup centralized in one place
+// Firebase configuration  CENTRALIZED ;)
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";

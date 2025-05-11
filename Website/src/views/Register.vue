@@ -2,13 +2,16 @@
   <div class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
       <div class="text-center">
-        <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
+        <router-link to="/">
+          <img class="mx-auto h-16 w-auto" src="/images/favicon.png" alt="Logo">
+        </router-link>
+        <h2 class="mt-6 text-3xl font-extrabold text-primary">
           Crear una cuenta
         </h2>
         <p class="mt-2 text-sm text-gray-600">
           O
-          <router-link to="/login" class="font-medium text-primary hover:text-primary/80">
-            inicia sesión si ya tienes cuenta
+          <router-link to="/login" class="font-medium text-blue-800 hover:text-blue-500">
+            <strong>inicia sesión</strong> si ya tienes cuenta
           </router-link>
         </p>
       </div>
@@ -36,7 +39,7 @@
               placeholder="Tu nombre"
             />
           </div>
-          
+      
           <div class="mb-4">
             <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
             <input 
@@ -49,7 +52,7 @@
               placeholder="correo@ejemplo.com"
             />
           </div>
-          
+          <br>
           <div class="mb-4">
             <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
             <input 
@@ -62,7 +65,7 @@
               placeholder="••••••••"
             />
           </div>
-          
+          <br>
           <div class="mb-4">
             <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-1">Confirmar contraseña</label>
             <input 
@@ -75,20 +78,6 @@
               placeholder="••••••••"
             />
           </div>
-        </div>
-
-        <div class="flex items-center">
-          <input 
-            id="terms" 
-            name="terms" 
-            type="checkbox" 
-            v-model="termsAccepted"
-            required
-            class="h-4 w-4 text-primary focus:ring-primary/50 border-gray-300 rounded" 
-          />
-          <label for="terms" class="ml-2 block text-sm text-gray-900">
-            Acepto los <a href="#" class="text-primary hover:text-primary/80">Términos y Condiciones</a>
-          </label>
         </div>
 
         <div>
@@ -125,7 +114,6 @@ export default {
     const email = ref('')
     const password = ref('')
     const confirmPassword = ref('')
-    const termsAccepted = ref(false)
     const isLoading = ref(false)
     const errorMessage = ref('')
     const successMessage = ref('')
@@ -143,8 +131,7 @@ export default {
         name.value.trim() !== '' &&
         email.value.trim() !== '' &&
         password.value.length >= 6 &&
-        password.value === confirmPassword.value &&
-        termsAccepted.value
+        password.value === confirmPassword.value
       )
     })
     
@@ -196,7 +183,6 @@ export default {
       email,
       password,
       confirmPassword,
-      termsAccepted,
       isLoading,
       errorMessage,
       successMessage,
