@@ -86,16 +86,16 @@ export default {
 
 <style>
 #map {
-  cursor: url('/images/niño.png') 16 40, auto;
+  cursor: auto;
   height: calc(100vh - 132px); 
   min-height: 400px; 
 }
 
 #map .leaflet-grab {
-  cursor: url('/images/niño.png') 16 40, grab;
+  cursor: grab;
 }
 
 #map .leaflet-grabbing {
-  cursor: url('/images/niño.png') 16 40, grabbing;
+  cursor: grabbing;
 }
 </style> 
