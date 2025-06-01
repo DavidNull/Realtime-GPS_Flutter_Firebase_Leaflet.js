@@ -26,9 +26,10 @@ export default class MapPresenter {
   }
   
   initMap(L, mapId) {
+    // Better initial coordinates for Spain (more centered)
     this.state.map.value = L.map(mapId, {
       zoomControl: false
-    }).setView([40.416775, -3.703790], 6);
+    }).setView([40.0, -4.0], 6);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
@@ -36,12 +37,15 @@ export default class MapPresenter {
 
     this.L = L;
 
+    // Ensure proper sizing and centering
     setTimeout(() => {
       if (this.state.map.value) {
         this.state.map.value.invalidateSize();
-        console.log("Map invalidSize called");
+        // Re-center the map to ensure proper display
+        this.state.map.value.setView([40.0, -4.0], 6);
+        console.log("Map invalidSize called and recentered");
       }
-    }, 100); // little delay, bcs with complex layout changes it sometimes doesn't work
+    }, 200); // Increased delay for better reliability
 
     window.addEventListener('resize', () => {
       if (this.state.map.value) {
