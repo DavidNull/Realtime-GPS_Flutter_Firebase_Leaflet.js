@@ -24,7 +24,6 @@
     
     <!-- "Sabias que?" section -->
     <div class="bg-slate-800 text-white py-16 relative">
-      <!-- Animated floating elements inspired by modern UI designs -->
       <!-- https://github.com/css-tricks/floating-elements-animation -->
       <div class="background-elements">
         <div class="floating-element element-1"></div>
@@ -134,7 +133,7 @@ export default {
   animation: float 16s infinite ease-in-out;
 }
 
-/* Different sizes and positions for variety */
+/* las bolas que flotan */
 .element-1 {
   width: 80px;
   height: 80px;
@@ -142,7 +141,6 @@ export default {
   left: 5%;
   animation-delay: 0s;
 }
-
 .element-2 {
   width: 60px;
   height: 60px;
@@ -216,8 +214,7 @@ export default {
 }
 
 /* 
-  Floating animation keyframes
-  Creates a smooth, organic movement pattern
+  animación de las bolas que flotan
 */
 @keyframes float {
   0% { 
@@ -237,14 +234,13 @@ export default {
   }
 }
 
-/* Hide floating elements on smaller screens for better performance */
 @media (max-width: 768px) {
   .floating-element {
     display: none;
   }
 }
 
-/* Reduce motion for users who prefer it */
+/* para usuarios que prefieren no tener animaciones no hay bolitas */
 @media (prefers-reduced-motion: reduce) {
   .floating-element {
     animation: none;

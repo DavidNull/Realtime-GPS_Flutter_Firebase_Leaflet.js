@@ -1,42 +1,52 @@
 <template>
-  <div class="container mx-auto mt-10 p-8 bg-white rounded-xl shadow-2xl max-w-2xl border border-gray-200">
-    <h1 class="text-4xl font-bold text-primary mb-8 border-b-2 border-primary pb-4">Mi Perfil</h1>
+  <div class="profile-container">
+    <h1 class="profile-title">Mi Perfil</h1>
     
-    <div v-if="userStore.loading && !userStore.userData" class="text-center py-12">
-      <svg class="animate-spin h-10 w-10 text-primary mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <div v-if="userStore.loading && !userStore.userData" class="loading-container">
+      <svg class="loading-spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
       </svg>
-      <p class="text-gray-600 text-lg">Cargando perfil...</p>
+      <p class="loading-text">Cargando perfil...</p>
     </div>
     
-    <div v-else-if="userStore.error" class="bg-red-50 border-l-4 border-red-400 text-red-800 p-6 rounded-md shadow-md mb-6">
-      <p class="font-bold text-lg">Error al cargar el perfil</p>
+    <div v-else-if="userStore.error" class="error-container">
+      <p class="error-title">Error al cargar el perfil</p>
       <p>{{ userStore.error }}</p>
     </div>
     
-    <div v-else-if="userStore.userData" class="space-y-8">
-      <div class="p-6 bg-sky-50 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
-        <label class="block text-sm font-semibold text-sky-700 mb-1">Nombre</label>
-        <p class="mt-1 text-xl text-sky-900">{{ userStore.userData.nombre }}</p>
+    <div v-else-if="userStore.userData" class="profile-fields">
+      <div class="field-container sky">
+        <label class="field-label sky">Nombre</label>
+        <p class="field-value sky">{{ userStore.userData.nombre }}</p>
       </div>
-      <div class="p-6 bg-emerald-50 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
-        <label class="block text-sm font-semibold text-emerald-700 mb-1">Correo Electrónico</label>
-        <p class="mt-1 text-xl text-emerald-900">{{ userStore.userData.email }}</p>
+      <div class="field-container emerald">
+        <label class="field-label emerald">Correo Electrónico</label>
+        <p class="field-value emerald">{{ userStore.userData.email }}</p>
       </div>
-      <div class="p-6 bg-amber-50 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
-        <label class="block text-sm font-semibold text-amber-700 mb-1">ID de Dispositivo</label>
-        <p class="mt-1 text-xl text-amber-900 font-mono bg-amber-100 p-3 rounded inline-block shadow-inner">{{ userStore.userData.dispositivoID }}</p>
-        <p class="mt-2 text-xs text-gray-500">Usa esta ID en la aplicación móvil para sincronizar tu ubicación.</p>
+      <div class="field-container amber">
+        <label class="field-label amber">ID de Dispositivo</label>
+        <p class="field-value amber"><span class="device-id">{{ userStore.userData.dispositivoID }}</span></p>
+        <p class="device-id-hint">Usa esta ID en la aplicación móvil para sincronizar tu ubicación.</p>
       </div>
-      <div class="p-6 bg-violet-50 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
-        <label class="block text-sm font-semibold text-violet-700 mb-1">Fecha de Registro</label>
-        <p class="mt-1 text-xl text-violet-900">{{ formatDate(userStore.userData.fechaRegistro) }}</p>
+      <div class="field-container violet">
+        <label class="field-label violet">Fecha de Registro</label>
+        <p class="field-value violet">{{ formatDate(userStore.userData.fechaRegistro) }}</p>
       </div>
     </div>
     
-    <div v-else class="text-center py-12">
-      <p class="text-gray-500 text-lg">No se pudieron cargar los datos del perfil. Asegúrate de haber iniciado sesión.</p>
+    <div v-else class="no-data-container">
+      <p class="no-data-text">No se pudieron cargar los datos del perfil. Asegúrate de haber iniciado sesión.</p>
+    </div>
+
+    <div class="button-container">
+      <router-link to="/map" class="back-to-map-button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 14.5c0 2.485-4.03 4.5-9 4.5s-9-2.015-9-4.5v-5c0-2.485 4.03-4.5 9-4.5s9 2.015 9 4.5v5z" stroke="currentColor" stroke-width="2"/>
+          <path d="M21 9.5c0 2.485-4.03 4.5-9 4.5s-9-2.015-9-4.5" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        Volver al Mapa
+      </router-link>
     </div>
   </div>
 </template>
@@ -74,4 +84,8 @@ export default {
     }
   }
 }
-</script> 
+</script>
+
+<style scoped>
+@import '../styles/profile.css';
+</style> 
