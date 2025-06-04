@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'dart:developer' as developer;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(); // Temporarily disabled
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -38,7 +38,7 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   String locationMessage = "Ubicación no obtenida";
   bool isLoading = false;
-  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -132,18 +132,20 @@ class _LocationScreenState extends State<LocationScreen> {
         desiredAccuracy: LocationAccuracy.high,
         timeLimit: const Duration(seconds: 15),
       );
-      
-      // Temporarily disable Firebase upload
-      /*
+ 
+  
       await _firestore.collection("ubicaciones").doc("usuario1").set({
         "latitud": position.latitude,
         "longitud": position.longitude,
         "timestamp": FieldValue.serverTimestamp(),
+        "accuracy": position.accuracy,
+        "altitude": position.altitude,
+        "speed": position.speed,
       });
-      */
+    
       
       setState(() {
-        locationMessage = "Ubicación obtenida: Lat: ${position.latitude}, Lon: ${position.longitude}";
+        locationMessage = "Ubicación enviada exitosamente!\nLat: ${position.latitude}\nLon: ${position.longitude}\nPrecisión: ${position.accuracy}m";
       });
     } catch (e) {
       setState(() {

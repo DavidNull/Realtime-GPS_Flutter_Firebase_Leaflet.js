@@ -1,0 +1,15 @@
+#map-container {
+  position: relative;
+  z-index: 1;
+  height: calc(100vh - 120px);
+  overflow: hidden;
+}
+
+#map {
+  height: 100%;
+  min-height: 400px;
+  cursor: auto;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+} 

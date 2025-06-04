@@ -131,7 +131,8 @@ export default class MapPresenter {
 
       if (!this.state.marker.value) {
         this.state.marker.value = L.marker(
-          [locationModel.latitude, locationModel.longitude]
+          [locationModel.latitude, locationModel.longitude],
+          { icon: childIcon }
         ).addTo(this.state.map.value);
       } else {
         this.state.marker.value.setLatLng([locationModel.latitude, locationModel.longitude]);
