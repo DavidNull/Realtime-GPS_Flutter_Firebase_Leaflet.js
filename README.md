@@ -148,11 +148,7 @@ Website/
 - ✓ Improved map interaction with custom markers and cursor
 - ✓ Added dynamic page title animation
 
-## 👨‍💻 Author
-
-This project was created and is maintained by David Cela Pedraza.
-
----
+## 👨‍💻 
 
 © 2025 David Cela Pedraza 🐰 
 
