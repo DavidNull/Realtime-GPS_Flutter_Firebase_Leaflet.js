@@ -6,6 +6,11 @@
 **Author**: David Cela Pedraza  
 **Date**: 2025
 
+## 📎 Resources // Recursos
+
+- 🖼️ **Presentación**: [Google Slides](https://docs.google.com/presentation/d/1lO1_EMuWcHMEg0MBHHQX1SWp2uZCsrLxl4PTk1KBv4c/edit?usp=sharing)  
+- 📄 **Documentación**: [Google Docs](https://docs.google.com/document/d/1CF-YSl9W1nP6JdQS0Te2TpbXTu7o2BIZQIjrzP-GOOI/edit?usp=sharing)
+
 ## 📋 Description
 
 **🇬🇧 English**  
