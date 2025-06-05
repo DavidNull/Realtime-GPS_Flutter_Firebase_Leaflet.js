@@ -14,7 +14,7 @@
           Where is my kid? 🧒🏻🌍
         </router-link>
         
-        <div class="w-6"></div> <!-- Spacer for centering -->
+        <div class="w-6"></div> 
       </div>
 
       <!-- Desktop  -->
@@ -75,6 +75,7 @@
 
       <!-- Mobile  -->
       <!-- https://codepen.io/lloydtao/pen/abpKwXW -->
+      
       <div v-if="isMobileMenuOpen" class="md:hidden mt-4 pb-4 border-t border-white/20">
         <div class="flex flex-col space-y-3 pt-4">
           <template v-if="isAuthenticated">
