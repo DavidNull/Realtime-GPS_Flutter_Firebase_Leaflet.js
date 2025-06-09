@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen flex flex-col app-container">
     <Navbar />
     <main class="flex-grow">
       <router-view />
@@ -62,4 +62,10 @@ export default {
     }
   }
 }
-</script> 
+</script>
+
+<style>
+.app-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+</style> 

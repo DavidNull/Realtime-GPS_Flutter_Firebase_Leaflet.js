@@ -1,5 +1,3 @@
-# Firebase sensitive configuration
-Website/firebase.js
 
 # Environment variables
 .env

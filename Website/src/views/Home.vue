@@ -3,18 +3,18 @@
     <!-- MAP VIDEO section -->
     <div class="relative">
       <div class="absolute inset-0 overflow-hidden">
-        <video autoplay loop muted class="min-w-full min-h-full object-cover">
+        <video autoplay loop muted class="min-w-full min-h-full object-cover animate-fade-from-black">
           <source src="/videos/Fondoindex.mp4" type="video/mp4">
         </video>
-        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="absolute inset-0 bg-black bg-opacity-50 animate-fade-in"></div>
       </div>
       
       <div class="relative container mx-auto px-4 py-32 flex flex-col items-center text-white">
-        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-center">Where is my kid?</h1>
-        <p class="text-xl md:text-2xl mb-8 text-center max-w-2xl">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-center animate-fade-in">Where is my kid?</h1>
+        <p class="text-xl md:text-2xl mb-8 text-center max-w-2xl animate-fade-in">
           La plataforma que te mantiene conectado con la ubicación de tus hijos en tiempo real
         </p>
-        <div class="flex space-x-4">
+        <div class="flex space-x-4 animate-fade-in">
           <router-link to="/register" class="btn btn-primary text-lg px-6 py-3">
             Comenzar Ahora
           </router-link>
