@@ -16,6 +16,11 @@ This project offers a solution that allows parents or legal guardians to monitor
 **"Where is my kid? 🧒🏻🌍"** es un sistema de rastreo GPS en tiempo real 📍 desarrollado como Proyecto Final de Grado del ciclo (TFG) de Administración de Sistemas Informáticos en Red (ASIR).  
 Este proyecto proporciona una solución que permite a padres o tutores legales monitorear la ubicación de sus hijos en tiempo real mediante una interfaz web moderna 🌐 y una aplicación móvil 📱.
 
+## 📚 Documentation & Presentation
+
+- **📊 Presentation**: [Google Slides](https://docs.google.com/presentation/d/1lO1_EMuWcHMEg0MBHHQX1SWp2uZCsrLxl4PTk1KBv4c/edit?usp=sharing)
+- **📖 Documentation**: [Google Docs](https://docs.google.com/document/d/1CF-YSl9W1nP6JdQS0Te2TpbXTu7o2BIZQIjrzP-GOOI/edit?usp=sharing)
+
 ## ✨ Features
 
 - 🔄 **Real-time tracking**
@@ -75,6 +80,18 @@ The mobile application (developed with Flutter) offers:
 - Flutter SDK (for mobile app)
 - Git
 
+### 🐳 Quick Start with Docker
+
+The easiest way to run the web application locally is using Docker:
+
+```bash
+# Pull and run the Docker image
+docker pull davidnull/whereismykid
+docker run -p 8080:80 davidnull/whereismykid
+```
+
+Then open your browser and navigate to `http://localhost:8080`
+
 ### Web Application Installation 🖥️
 
 ```bash
@@ -90,6 +107,21 @@ npm install
 # Run development server
 npm run dev
 
+```
+
+### 🐳 Docker Development
+
+To build and run the Docker container locally:
+
+```bash
+# Navigate to the web application directory
+cd Website
+
+# Build the Docker image
+docker build -t whereismykid .
+
+# Run the container
+docker run -p 8080:80 whereismykid
 ```
 
 ### Mobile Application Installation 📱
@@ -133,7 +165,10 @@ Website/
 ├── vite.config.js       # Vite configuration
 ├── tailwind.config.js   # Tailwind CSS configuration
 ├── postcss.config.js    # PostCSS configuration for Tailwind
-└── package.json         # Dependencies and scripts
+├── package.json         # Dependencies and scripts
+├── Dockerfile           # Docker configuration for containerization
+├── nginx.conf           # Nginx configuration for production
+└── .dockerignore        # Docker ignore file
 ```
 
 ## ✅ Improvements in Version 2.0
@@ -147,6 +182,7 @@ Website/
 - ✓ Enhanced responsive design for mobile and desktop
 - ✓ Improved map interaction with custom markers and cursor
 - ✓ Added dynamic page title animation
+- ✓ **Docker containerization** for easy deployment and distribution
 
 ## 👨‍💻 Author
 
