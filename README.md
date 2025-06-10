@@ -54,6 +54,8 @@ The web interface allows users to:
 - **Pinia**
 - **Vue Router**
 - **PostCSS**
+- **Animate.css**: For CSS animations and transitions
+- **AOS (Animate On Scroll)**: For scroll-triggered animations
 
 ### 2. Mobile Application (WIMK-GPS) 📲
 

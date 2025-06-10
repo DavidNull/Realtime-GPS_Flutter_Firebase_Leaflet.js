@@ -37,7 +37,6 @@ export default {
       },
       animation: {
         'fade-in': 'fadeIn 2s ease-out',
-        'fade-in-slow': 'fadeIn 3s ease-out',
         'fade-from-black': 'fadeFromBlack 2s ease-out',
       }
     },
