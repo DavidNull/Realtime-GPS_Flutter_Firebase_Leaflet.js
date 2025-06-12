@@ -264,3 +264,12 @@
     font-size: 0.8rem;
   }
 } 
+
+
+
+
+.easter-egg:hover::after {
+  content: "👧🏻";
+  position: absolute;
+  right: 30px;
+}

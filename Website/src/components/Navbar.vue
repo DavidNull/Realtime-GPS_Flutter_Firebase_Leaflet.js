@@ -11,7 +11,7 @@
         </button>
         
         <router-link to="/" class="logo-link mobile-logo">
-          Where is my kid? 🧒🏻🌍
+          Where is my kid? <span class="easter-egg">🧒🏻</span>🌍
         </router-link>
         
         <div class="w-6"></div> 
@@ -24,7 +24,7 @@
         
         <div class="absolute left-1/2 transform -translate-x-1/2">
           <router-link to="/" class="logo-link">
-            Where is my kid? 🧒🏻🌍
+            Where is my kid? <span class="easter-egg">🧒🏻</span>🌍
           </router-link>
         </div>
 
