@@ -64,7 +64,7 @@
               Iniciar Sesión
             </router-link>
             <router-link to="/register" class="register-button">
-              Registrarse
+              <span>Registrarse</span>
             </router-link>
           </template>
         </div>

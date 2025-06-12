@@ -165,7 +165,8 @@
     }
   }
   
-  /* https://www.joshwcomeau.com/react/rainbow-button/" */
+  /* https://dev.to/webdeasy/top-20-css-buttons-animations-f41
+     https://www.joshwcomeau.com/react/rainbow-button/"         */
   .btn-gradient {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
     color: white;
