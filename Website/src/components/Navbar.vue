@@ -36,10 +36,7 @@
                 @click="toggleDropdown" 
                 class="profile-button"
               >
-                <img v-if="userData?.photoURL" :src="userData.photoURL" alt="Avatar" class="avatar-img">
-                <span v-else class="avatar-initials">
-                  {{ userData?.nombre ? userData.nombre[0].toUpperCase() : 'U' }}
-                </span>
+                <img src="/images/tutor.png" alt="Avatar" class="avatar-img">
                 <span class="hidden sm:inline">{{ userData?.nombre || 'Usuario' }}</span>
                 <svg class="dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
               </button>
@@ -80,10 +77,7 @@
         <div class="flex flex-col space-y-3 pt-4">
           <template v-if="isAuthenticated">
             <div class="flex items-center space-x-3 px-4 py-2 bg-white/10 rounded-lg">
-              <img v-if="userData?.photoURL" :src="userData.photoURL" alt="Avatar" class="avatar-img">
-              <span v-else class="avatar-initials">
-                {{ userData?.nombre ? userData.nombre[0].toUpperCase() : 'U' }}
-              </span>
+              <img src="/images/tutor.png" alt="Avatar" class="avatar-img">
               <span class="text-white font-medium">{{ userData?.nombre || 'Usuario' }}</span>
             </div>
             <router-link 

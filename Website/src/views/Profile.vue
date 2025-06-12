@@ -26,7 +26,18 @@
       </div>
       <div class="field-container amber" data-aos="fade-up" data-aos-delay="300">
         <label class="field-label amber">ID de Dispositivo</label>
-        <p class="field-value amber"><span class="device-id">{{ userStore.userData.dispositivoID }}</span></p>
+        <div class="device-id-container">
+          <p class="field-value amber">
+            <span 
+              class="device-id clickable" 
+              @click="copyDeviceId"
+              :title="copyMessage"
+            >
+              {{ userStore.userData.dispositivoID }}
+            </span>
+          </p>
+          <p class="message-id" :class="{ show: showTooltip }">{{ copyMessage }}</p>
+        </div>
         <p class="device-id-hint" data-aos="fade-up" data-aos-delay="800">Usa esta ID en la aplicación móvil para sincronizar tu ubicación.</p>
       </div>
       <div class="field-container violet" data-aos="fade-up" data-aos-delay="400">
@@ -53,13 +64,15 @@
 
 <script>
 import { useUserStore } from '../stores/userStore'
-import { onMounted, computed } from 'vue' // computed para observar --> userStore.user
+import { onMounted, computed, ref } from 'vue' // computed para observar --> userStore.user
 import { auth } from '../../firebase' // Import auth para verificar "currentUser"
 
 export default {
   name: 'ProfileView',
   setup() {
     const userStore = useUserStore()
+    const copyMessage = ref('Click para copiar ID')
+    const showTooltip = ref(false)
 
     // Llama a fetchUserData si el usuario está autenticado pero los datos no están cargados <-- Para verificar ya que App.vue o Navbar deberían haberlo hecho
     onMounted(() => {
@@ -78,9 +91,37 @@ export default {
       });
     };
 
+    const copyDeviceId = async () => {
+      try {
+        const deviceId = userStore.userData.dispositivoID;
+        await navigator.clipboard.writeText(deviceId);
+        copyMessage.value = '¡ID copiado!';
+        showTooltip.value = true;
+        
+        // Resetear el mensaje después de 2 segundos
+        setTimeout(() => {
+          copyMessage.value = 'Click para copiar ID';
+          showTooltip.value = false;
+        }, 2000);
+      } catch (err) {
+        console.error('Error al copiar al portapapeles:', err);
+        copyMessage.value = 'Error al copiar';
+        showTooltip.value = true;
+        
+        // Resetear el mensaje después de 2 segundos
+        setTimeout(() => {
+          copyMessage.value = 'Click para copiar ID';
+          showTooltip.value = false;
+        }, 2000);
+      }
+    };
+
     return {
       userStore, // La expone para acceder a userData, loading, error
-      formatDate
+      formatDate,
+      copyDeviceId,
+      copyMessage,
+      showTooltip
     }
   }
 }
